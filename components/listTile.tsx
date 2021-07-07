@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
-import {View, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {View, Text, Button} from 'react-native';
 
 interface Props {
   goal: string;
@@ -13,12 +12,15 @@ const ListTile: FC<Props> = props => {
         flexDirection: 'row',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+        marginVertical: '1%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
       }}>
       <Text>{props.goal}</Text>
-      <Icon
-        name="add"
-        size={30}
+
+      <Button
+        title="Done"
         color="#900"
         onPress={a => {
           console.log(props.goal);

@@ -3,12 +3,15 @@ import {TextInput, View} from 'react-native';
 
 interface Props {
   placeholder: string;
+  setter: any;
+  value: string;
 }
 
 const TextInputComp: FC<Props> = props => {
   const [enteredValue, setEnteredValue] = useState<string | undefined>('');
   const changeText = (input: string): void => {
     setEnteredValue(input);
+    props.setter(input);
   };
   return (
     <View
@@ -19,7 +22,7 @@ const TextInputComp: FC<Props> = props => {
       }}>
       <TextInput
         placeholder={props.placeholder}
-        value={enteredValue}
+        value={props.value}
         onChangeText={changeText}
       />
     </View>
