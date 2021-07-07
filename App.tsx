@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import TextInputComp from './components/textInput';
 import ButtonComp from './components/button';
@@ -10,15 +10,35 @@ interface DataStorage {
 
 const App: FC = () => {
   const [addValue, setAddValue] = useState<string>('');
+  const [removeValue, setRemoveValue] = useState<string>('');
   const [data, addData] = useState<DataStorage[]>([]);
   const addHandler = (): void => {
-    const copy: DataStorage[] = data;
-    const arr: DataStorage = {goal: addValue};
-    setAddValue('');
-    copy.push(arr);
-    addData(copy);
+    if (addValue !== '') {
+      const copy: DataStorage[] = data;
+      const arr: DataStorage = {goal: addValue};
+      setAddValue('');
+      copy.push(arr);
+      addData(copy);
+    }
   };
 
+  useEffect(() => {
+    console.log(removeValue);
+
+    removeHandler();
+    setRemoveValue('');
+  }, [removeValue]);
+
+  const removeHandler = (): void => {
+    const updatedArray: DataStorage[] = data.filter(e => {
+      return e.goal !== removeValue;
+    });
+    addData(updatedArray);
+  };
+
+  const itemRenderer = ({item}: any) => {
+    return <ListTile goal={item.goal} remover={setRemoveValue} />;
+  };
 
   return (
     <View style={styles.root}>
@@ -35,12 +55,13 @@ const App: FC = () => {
           setter={setAddValue}
           value={addValue}
         />
-        <ButtonComp title="Add To-Do" onPress={addHandler} />
+        <ButtonComp title="Add Task" onPress={addHandler} />
       </View>
       <View style={{marginTop: '10%'}}>
         <FlatList
           data={data}
-          renderItem={({item}) => <ListTile goal={item.goal} />}
+          renderItem={itemRenderer}
+          //renderItem={({item}) => <ListTile goal={item.goal} />}
           keyExtractor={item => item.goal}
         />
       </View>

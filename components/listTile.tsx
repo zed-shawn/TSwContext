@@ -3,9 +3,13 @@ import {View, Text, Button} from 'react-native';
 
 interface Props {
   goal: string;
+  remover: any;
 }
 
 const ListTile: FC<Props> = props => {
+  const removeGoal = (): void => {
+    props.remover(props.goal);
+  };
   return (
     <View
       style={{
@@ -19,13 +23,7 @@ const ListTile: FC<Props> = props => {
       }}>
       <Text>{props.goal}</Text>
 
-      <Button
-        title="Done"
-        color="#900"
-        onPress={a => {
-          console.log(props.goal);
-        }}
-      />
+      <Button title="Done" color="#900" onPress={removeGoal} />
     </View>
   );
 };
