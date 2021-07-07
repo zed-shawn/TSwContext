@@ -11,7 +11,12 @@ const TextInputComp: FC<Props> = props => {
     setEnteredValue(input);
   };
   return (
-    <View>
+    <View
+      style={{
+        borderBottomWidth: 1,
+        width: '60%',
+        height: '100%',
+      }}>
       <TextInput
         placeholder={props.placeholder}
         value={enteredValue}
